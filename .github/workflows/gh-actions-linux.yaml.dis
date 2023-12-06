@@ -1,5 +1,10 @@
 name: GH Actions - Linux cross compile
 
+# Build linux, macOS and Windows binaries on a Linux worker.
+# Why?
+#  - Linux is cheaper in GH Actions
+#  - EC2 can't do on-demand short-lived macOS
+
 on:
   push:
     branches: ["main"]
