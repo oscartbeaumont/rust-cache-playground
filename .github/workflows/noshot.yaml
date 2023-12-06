@@ -25,6 +25,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
+          prefix-key: rust-${{ matrix.target }}
           cache-on-failure: "true"
 
       - name: Compile
