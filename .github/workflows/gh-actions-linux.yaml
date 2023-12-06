@@ -12,49 +12,63 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@stable
+      # - uses: dtolnay/rust-toolchain@stable
 
-      # TODO: Enable this + different cache key
-      #   - uses: Swatinem/rust-cache@v2
-      #     with:
-      #       cache-on-failure: "true"
-
-      # TODO: Run tests for each OS
-      #   - name: Run tests
-      #     run: cargo test --all-features
-
-      #   - name: Determine Rust target suffix
-      #     shell: bash
-      #     run: |
-      #       RUST_TARGET_SUFFIX="$(rustc -vV | sed -n 's|host: ||p' | cut -d- -f2-10)"
-      #       BINARY_PATH_SUFFIX="$([ "${{ matrix.os }}" == "windows" ] && echo ".exe" || echo "")"
-      #       echo "RUST_TARGET_SUFFIX=$RUST_TARGET_SUFFIX" >> $GITHUB_ENV
-      #       echo "BINARY_PATH_SUFFIX=$BINARY_PATH_SUFFIX" >> $GITHUB_ENV
-
-      - name: Build binary - x86_64-apple-darwin
-        uses: houseabsolute/actions-rust-cross@v0
+      - uses: ATiltedTree/setup-rust@v1
         with:
-          command: build
-          target: x86_64-apple-darwin
-          args: "--locked --release"
-          strip: true
-        env:
-          RUSTFLAGS: "-C link-args=-fstack-protector-all -lssp"
+          targets: x86_64-apple-darwin
+          rust-version: stable
 
-      - name: Build binary - x86_64-unknown-linux-gnu
-        uses: houseabsolute/actions-rust-cross@v0
+      # Use the v1 of this action
+      - uses: mbround18/setup-osxcross@v1
         with:
-          command: build
-          target: x86_64-unknown-linux-gnu
-          args: "--locked --release"
-          strip: true
+          osx-version: "12.3"
 
-      - name: Build binary - aarch64-unknown-linux-gnu
-        uses: houseabsolute/actions-rust-cross@v0
-        with:
-          command: build
-          target: aarch64-unknown-linux-gnu
-          args: "--locked --release"
-          strip: true
+      # Build your code for apple-darwin based release
+      - name: Build Your Code
+        run: cargo build --release --target x86_64-apple-darwin
 
-      # TODO: Windows
+      # # TODO: Enable this + different cache key
+      # #   - uses: Swatinem/rust-cache@v2
+      # #     with:
+      # #       cache-on-failure: "true"
+
+      # # TODO: Run tests for each OS
+      # #   - name: Run tests
+      # #     run: cargo test --all-features
+
+      # #   - name: Determine Rust target suffix
+      # #     shell: bash
+      # #     run: |
+      # #       RUST_TARGET_SUFFIX="$(rustc -vV | sed -n 's|host: ||p' | cut -d- -f2-10)"
+      # #       BINARY_PATH_SUFFIX="$([ "${{ matrix.os }}" == "windows" ] && echo ".exe" || echo "")"
+      # #       echo "RUST_TARGET_SUFFIX=$RUST_TARGET_SUFFIX" >> $GITHUB_ENV
+      # #       echo "BINARY_PATH_SUFFIX=$BINARY_PATH_SUFFIX" >> $GITHUB_ENV
+
+      # - name: Build binary - x86_64-apple-darwin
+      #   uses: houseabsolute/actions-rust-cross@v0
+      #   with:
+      #     command: build
+      #     target: x86_64-apple-darwin
+      #     args: "--locked --release"
+      #     strip: true
+      #   env:
+      #     RUSTFLAGS: "-C link-args=-fstack-protector-all -lssp"
+
+      # - name: Build binary - x86_64-unknown-linux-gnu
+      #   uses: houseabsolute/actions-rust-cross@v0
+      #   with:
+      #     command: build
+      #     target: x86_64-unknown-linux-gnu
+      #     args: "--locked --release"
+      #     strip: true
+
+      # - name: Build binary - aarch64-unknown-linux-gnu
+      #   uses: houseabsolute/actions-rust-cross@v0
+      #   with:
+      #     command: build
+      #     target: aarch64-unknown-linux-gnu
+      #     args: "--locked --release"
+      #     strip: true
+
+      # # TODO: Windows
