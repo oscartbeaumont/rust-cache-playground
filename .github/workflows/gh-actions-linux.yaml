@@ -38,6 +38,8 @@ jobs:
           target: x86_64-apple-darwin
           args: "--locked --release"
           strip: true
+        env:
+          RUSTFLAGS: "-C link-args=-fstack-protector-all -lssp"
 
       - name: Build binary - x86_64-unknown-linux-gnu
         uses: houseabsolute/actions-rust-cross@v0
