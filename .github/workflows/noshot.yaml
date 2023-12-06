@@ -17,8 +17,8 @@ jobs:
           #- target: x86_64-pc-windows-gnu
           #- target: x86_64-unknown-linux-musl
           #- target: x86_64-apple-darwin
-          # - target: aarch64-apple-darwin
 
+          - target: aarch64-apple-darwin
           - target: aarch64-unknown-linux-musl
 
     steps:
@@ -33,6 +33,7 @@ jobs:
           RUSTTARGET: ${{ matrix.target }}
           UPLOAD_MODE: none
 
+      # TODO: These have the ugliest upload format, clean it up!
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
