@@ -29,4 +29,4 @@ getrandom = "0.2.11"
 either = "1.9.0"
 
 [patch.crates-io]
-rustls-acme = { git = "https://github.com/oscartbeaumont/rustls-acme.git", rev = "b0040eb33a8e27b563723cffe5b0ff3e49535440" }
+rustls-acme = { git = "https://github.com/oscartbeaumont/rustls-acme.git", rev = "5ebb1ff7d7df2fd44f8cd4c20bf58c61700c8cc7" }
