@@ -1679,7 +1679,7 @@ dependencies = [
 [[package]]
 name = "rustls-acme"
 version = "0.8.1"
-source = "git+https://github.com/oscartbeaumont/rustls-acme.git?rev=1cbd4a60ec9821ef8ef9ab129778309789978d18#1cbd4a60ec9821ef8ef9ab129778309789978d18"
+source = "git+https://github.com/oscartbeaumont/rustls-acme.git?rev=5ebb1ff7d7df2fd44f8cd4c20bf58c61700c8cc7#5ebb1ff7d7df2fd44f8cd4c20bf58c61700c8cc7"
 dependencies = [
  "async-io 2.2.1",
  "async-trait",
