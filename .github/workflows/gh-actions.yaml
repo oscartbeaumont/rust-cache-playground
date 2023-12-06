@@ -1,0 +1,51 @@
+name: GH Actions
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu, macos, windows]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: "true"
+
+      - name: Run tests
+        run: cargo test --all-features
+
+      - name: Determine Rust target suffix
+        shell: bash
+        run: |
+          RUST_TARGET_SUFFIX="$(rustc -vV | sed -n 's|host: ||p' | cut -d- -f2-10)"
+          BINARY_PATH_SUFFIX="$([ "${{ matrix.os }}" == "windows" ] && echo ".exe" || echo "")"
+          echo "RUST_TARGET_SUFFIX=$RUST_TARGET_SUFFIX" >> $GITHUB_ENV
+          echo "BINARY_PATH_SUFFIX=$BINARY_PATH_SUFFIX" >> $GITHUB_ENV
+
+      - name: Build binaries
+        uses: houseabsolute/actions-rust-cross@v0
+        with:
+          command: build
+          target: x86_64-${{ env.RUST_TARGET_SUFFIX }}
+          args: "--locked --release"
+          strip: true
+
+      - name: Build binaries
+        uses: houseabsolute/actions-rust-cross@v0
+        if: ${{ matrix.os != 'windows' }}
+        with:
+          command: build
+          target: aarch64-${{ env.RUST_TARGET_SUFFIX }}
+          args: "--locked --release"
+          strip: true
