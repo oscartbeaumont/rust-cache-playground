@@ -8,23 +8,25 @@ serde = { version = "1" }
 specta = { version = "1" }
 serde_json = { version = "1" }
 uuid = { version = "1" }
-ring = "0.17.7"                # TODO: Trying the newer version
-# axum = { version = "0.6.20", features = ["http2", "macros"] }
-# axum-server = { version = "0.5.1", features = ["tokio-rustls", "rustls"] }
-# clap = { version = "4.4.8", features = ["derive"] }
-# rand = "0.8.5"
-# rustls-acme = { version = "0.7.7", features = ["axum"] }
-# thiserror = "1.0.50"
-# tokio = { version = "1.34.0", features = ["macros", "rt-multi-thread", "time"] }
-# tokio-stream = "0.1.14"
-# tower-http = { version = "0.4.4", features = ["fs"] }
-# argon2 = "0.5.2"
-# zeroize = { version = "1.7.0", features = ["serde"] }
-# chrono = { version = "0.4.31", features = ["serde"] }
-# tracing = "0.1.40"
-# tracing-subscriber = "0.3.18"
-# tower-cookies = { version = "0.9.0" }
-# time = { version = "0.3.30", features = ["serde"] }
-# branca = "0.10.1"
-# getrandom = "0.2.11"
-# either = "1.9.0"
+axum = { version = "0.6.20", features = ["http2", "macros"] }
+axum-server = { version = "0.5.1", features = ["tokio-rustls", "rustls"] }
+clap = { version = "4.4.8", features = ["derive"] }
+rand = "0.8.5"
+rustls-acme = { version = "0.8.1", features = ["axum"] }
+thiserror = "1.0.50"
+tokio = { version = "1.34.0", features = ["macros", "rt-multi-thread", "time"] }
+tokio-stream = "0.1.14"
+tower-http = { version = "0.4.4", features = ["fs"] }
+argon2 = "0.5.2"
+zeroize = { version = "1.7.0", features = ["serde"] }
+chrono = { version = "0.4.31", features = ["serde"] }
+tracing = "0.1.40"
+tracing-subscriber = "0.3.18"
+tower-cookies = { version = "0.9.0" }
+time = { version = "0.3.30", features = ["serde"] }
+branca = "0.10.1"
+getrandom = "0.2.11"
+either = "1.9.0"
+
+[patch.crates-io]
+rustls-acme = { git = "https://github.com/oscartbeaumont/rustls-acme.git", rev = "b0040eb33a8e27b563723cffe5b0ff3e49535440" }
