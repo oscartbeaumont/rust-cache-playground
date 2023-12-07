@@ -30,7 +30,7 @@ jobs:
 
       - name: Compile
         id: compile
-        if: ${{ matrix.target != 'x86_64-unknown-linux-musl' }}
+        if: ${{ matrix.target != 'x86_64-unknown-linux-musl' && matrix.target != 'aarch64-unknown-linux-musl' }}
         uses: oscartbeaumont/rust-build.action@master # rust-build/rust-build.action@v1.4.4
         with:
           RUSTTARGET: ${{ matrix.target }}
@@ -40,9 +40,28 @@ jobs:
         if: ${{ matrix.target == 'x86_64-unknown-linux-musl' }}
         run: sudo apt-get install musl-tools
 
-      - name: Compile - x86_64-unknown-linux-musl
-        if: ${{ matrix.target == 'x86_64-unknown-linux-musl' }}
+      # TODO: Caching this Git checkout
+      - name: Setup - aarch64-unknown-linux-musl
+        if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
         run: |
+          git clone https://github.com/lovell/aarch64-linux-musl-crosstools.git /opt/aarch64-linux-musl-crosstools
+          mv /opt/aarch64-linux-musl-crosstools/aarch64-linux-musl-cross /opt/aarch64-musl-cross
+          export PATH=$PATH:/opt/aarch64-musl-cross/bin
+          export CC=/opt/aarch64-musl-cross/bin/aarch64-linux-musl-cc
+          export PATH="/opt/aarch64-musl-cross/bin:$PATH"
+          export LIBZ_SYS_STATIC=1
+          mkdir -p /.cargo
+          cat > /.cargo/config.toml << EOF
+          [target.aarch64-unknown-linux-musl]
+          linker = "/opt/aarch64-musl-cross/bin/aarch64-linux-musl-gcc"
+          ar = "/opt/aarch64-musl-cross/bin/aarch64-linux-musl-ar"
+          EOF
+
+      - name: Compile - x86_64-unknown-linux-musl
+        if: ${{ matrix.target == 'x86_64-unknown-linux-musl' || matrix.target == 'aarch64-unknown-linux-musl' }}
+        run: |
+          echo "TODO $CC" # TODO
+
           rustup target add ${{ matrix.target }}
           cargo build --release --target ${{ matrix.target }}
 
