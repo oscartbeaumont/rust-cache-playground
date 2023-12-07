@@ -50,7 +50,7 @@ jobs:
           export CC=/opt/aarch64-musl-cross/bin/aarch64-linux-musl-cc
           export PATH="/opt/aarch64-musl-cross/bin:$PATH"
           export LIBZ_SYS_STATIC=1
-          mkdir -p /.cargo
+          sudo mkdir -p /.cargo
 
           cat << EOF | sudo tee -a /.cargo/config.toml
           [target.aarch64-unknown-linux-musl]
