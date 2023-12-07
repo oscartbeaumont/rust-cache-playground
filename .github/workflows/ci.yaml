@@ -40,7 +40,10 @@ jobs:
         if: ${{ matrix.target == 'x86_64-unknown-linux-musl' }}
         run: sudo apt-get install musl-tools
 
-      # TODO: Caching this Git checkout
+      - name: Setup - x86_64-pc-windows-gnu
+        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
+        run: sudo apt-get install musl-tools
+
       - name: Setup - aarch64-unknown-linux-musl
         if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
         run: |
