@@ -42,7 +42,7 @@ jobs:
 
       - name: Setup - x86_64-pc-windows-gnu
         if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        run: sudo apt-get install musl-tools
+        run: sudo apt-get install gcc-mingw-w64
 
       - name: Setup - aarch64-unknown-linux-musl
         if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
