@@ -28,13 +28,13 @@ jobs:
           prefix-key: rust-${{ matrix.target }}
           cache-on-failure: "true"
 
-      - name: Compile
-        id: compile
-        if: ${{ matrix.target != 'x86_64-unknown-linux-musl' && matrix.target != 'aarch64-unknown-linux-musl' }}
-        uses: oscartbeaumont/rust-build.action@master # rust-build/rust-build.action@v1.4.4
-        with:
-          RUSTTARGET: ${{ matrix.target }}
-          UPLOAD_MODE: none
+      # - name: Compile
+      #   id: compile
+      #   if: ${{ matrix.target != 'x86_64-unknown-linux-musl' && matrix.target != 'aarch64-unknown-linux-musl' }}
+      #   uses: oscartbeaumont/rust-build.action@master # rust-build/rust-build.action@v1.4.4
+      #   with:
+      #     RUSTTARGET: ${{ matrix.target }}
+      #     UPLOAD_MODE: none
 
       - name: Setup - x86_64-unknown-linux-musl
         if: ${{ matrix.target == 'x86_64-unknown-linux-musl' }}
@@ -51,7 +51,8 @@ jobs:
           export PATH="/opt/aarch64-musl-cross/bin:$PATH"
           export LIBZ_SYS_STATIC=1
           mkdir -p /.cargo
-          cat > /.cargo/config.toml << EOF
+
+          cat << EOF | sudo tee -a /.cargo/config.toml
           [target.aarch64-unknown-linux-musl]
           linker = "/opt/aarch64-musl-cross/bin/aarch64-linux-musl-gcc"
           ar = "/opt/aarch64-musl-cross/bin/aarch64-linux-musl-ar"
