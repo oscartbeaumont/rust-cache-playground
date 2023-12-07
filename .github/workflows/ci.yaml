@@ -72,8 +72,8 @@ jobs:
           export CXX=/opt/osxcross/target/bin/o64-clang++
           export PATH="/opt/osxcross/target/bin:$PATH"
           export LIBZ_SYS_STATIC=1
-          mkdir -p /.cargo
-          cat > /.cargo/config.toml << EOF
+          sudo mkdir -p /.cargo
+          cat << EOF | sudo tee -a /.cargo/config.toml
           [target.x86_64-apple-darwin]
           linker = "/opt/osxcross/target/bin/o64-clang"
           ar = "/opt/osxcross/target/bin/x86_64-apple-darwin14-ar"
